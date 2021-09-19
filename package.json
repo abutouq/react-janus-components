@@ -1,10 +1,13 @@
 {
-  "name": "react-janus-components",
-  "version": "2.0.0",
+  "name": "gizmira-janus-components",
+  "version": "1.0.2",
   "description": "Describe VideoRoomDemo here",
   "author": "ManZzup",
   "license": "MIT",
-  "repository": "https://github.com/avantrio/react-janus-components",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avantrio/react-janus-components.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
@@ -62,5 +65,12 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/avantrio/react-janus-components/issues"
+  },
+  "homepage": "https://github.com/avantrio/react-janus-components#readme",
+  "directories": {
+    "example": "example"
+  }
 }

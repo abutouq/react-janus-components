@@ -4,7 +4,7 @@ import { publishToRoom, publishOwnFeed, unpublishOwnFeed, sendData, publishChatr
 import JanusPlayer from './JanusPlayer'
 import JanusChat from './JanusChat'
 
-const JanusPublisher = ({ janus, opaqueId, room, secret, pin, username, setRoom, setPubId, setPubPvtId, children }) => {
+const JanusPublisher = ({ janus, opaqueId, room, secret, pin, username, setRoom, setPubId, setPubPvtId, isPublisher, children }) => {
   const [playerState, setPlayerState] = useState('Ready')
   const [isMuted, setIsMuted] = useState(false)
   const [sfutest, setSfuTest] = useState(null)
@@ -13,11 +13,11 @@ const JanusPublisher = ({ janus, opaqueId, room, secret, pin, username, setRoom,
   let mystream = null
 
   useEffect(() => {
-    publishToRoom(janus, opaqueId, room, secret, pin, username, false,
+    publishToRoom(janus, opaqueId, room, secret, pin, username, isPublisher,
       (_sfutest, eventType, data) => {
         setSfuTest(_sfutest)
         if (eventType === 'created') {
-        //   setRoom(data.room)
+          //   setRoom(data.room)
         } else if (eventType === 'joined') {
           const { id, private_id } = data
 
@@ -32,7 +32,7 @@ const JanusPublisher = ({ janus, opaqueId, room, secret, pin, username, setRoom,
 
           Janus.attachMediaStream(videoPlayer, mystream)
           if (_sfutest.webrtcStuff.pc.iceConnectionState !== 'completed' &&
-                        _sfutest.webrtcStuff.pc.iceConnectionState !== 'connected') {
+            _sfutest.webrtcStuff.pc.iceConnectionState !== 'connected') {
             setPlayerState('Live')
           }
           var videoTracks = mystream.getVideoTracks()
@@ -74,7 +74,7 @@ const JanusPublisher = ({ janus, opaqueId, room, secret, pin, username, setRoom,
   }
 
   const onBandwidthChange = (bitrate) => {
-    sfutest.send({'message': { 'request': 'configure', 'bitrate': bitrate }})
+    sfutest.send({ 'message': { 'request': 'configure', 'bitrate': bitrate } })
   }
 
   const playerElement = children || <JanusPlayer />
@@ -82,7 +82,7 @@ const JanusPublisher = ({ janus, opaqueId, room, secret, pin, username, setRoom,
   return (
     <div className='janus-publisher'>
       <div className='janus-video'>
-        { React.cloneElement(playerElement, {
+        {React.cloneElement(playerElement, {
           ref: videoArea,
           isPublisher: true,
           status: playerState,
@@ -92,7 +92,7 @@ const JanusPublisher = ({ janus, opaqueId, room, secret, pin, username, setRoom,
           onMute: onMuteClick,
           onUnmute: onUnMuteClick,
           onBandwidthChange: onBandwidthChange
-        }) }
+        })}
       </div>
     </div>
   )
