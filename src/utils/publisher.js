@@ -56,8 +56,10 @@ export function publishToRoom(janus, opaqueId, room, secret,
           var register = {
             'request': 'join',
             'room': room,
-            'ptype': 'publisher',
-            'display': username || ''
+            'ptype': 'subscriber',
+            'display': username || '',
+            secret,
+            pin
           }
           sfutest.send({ message: register })
         }

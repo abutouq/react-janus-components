@@ -6,7 +6,7 @@ import { subscribeRemoteFeed, sendData } from './utils/subscriber'
 import JanusPlayer from './JanusPlayer'
 import JanusChat from './JanusChat'
 
-const JanusSubscriber = ({ janus, opaqueId, room, children }) => {
+const JanusSubscriber = ({ janus, opaqueId, room, secret, pin, display, children }) => {
   const videoArea = useRef(null)
   const [playerState, setPlayerState] = useState('Ready')
   const [sfutest, setSfuTest] = useState(null)
@@ -23,7 +23,7 @@ const JanusSubscriber = ({ janus, opaqueId, room, children }) => {
 
       Janus.attachMediaStream(videoPlayer, mystream)
       if (_remoteFeed.webrtcStuff.pc.iceConnectionState !== 'completed' &&
-            _remoteFeed.webrtcStuff.pc.iceConnectionState !== 'connected') {
+        _remoteFeed.webrtcStuff.pc.iceConnectionState !== 'connected') {
         setPlayerState('Live')
       }
       var videoTracks = mystream.getVideoTracks()
@@ -41,7 +41,7 @@ const JanusSubscriber = ({ janus, opaqueId, room, children }) => {
     if (!janus || !room) {
       return
     }
-    publishToRoom(janus, opaqueId, room, null, null, null, false,
+    publishToRoom(janus, opaqueId, room, secret, pin, display, false,
       (_sfutest, eventType, data) => {
         setSfuTest(_sfutest)
 
@@ -90,11 +90,11 @@ const JanusSubscriber = ({ janus, opaqueId, room, children }) => {
   return (
     <div className='janus-subscriber'>
       <div className='janus-video'>
-        { React.cloneElement(playerElement, {
+        {React.cloneElement(playerElement, {
           ref: videoArea,
           isPublisher: false,
           status: playerState
-        }) }
+        })}
         {/* <JanusPlayer
                     ref={videoArea}
                     isPublisher={false}
