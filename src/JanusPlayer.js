@@ -1,42 +1,42 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 const JanusPlayer = React.forwardRef((
-    { 
-        isPublisher, 
-        status, 
+    {
+        isPublisher,
+        status,
         isMuted,
-        onStart, 
-        onStop, 
-        onMute, 
-        onUnmute, 
+        onStart,
+        onStop,
+        onMute,
+        onUnmute,
         onBandwidthChange,
-        
+
         readyText,
         pausedText,
         liveText,
         errorText
-    }, ref ) => {
+    }, ref) => {
     return (
         <div className="janus-video-container" ref={ref}>
             <div className="janus-video-status">
                 {status === "Ready" && (
-                    <span style={{color:"grey"}}>{ readyText ? readyText : 'Ready' }</span>
+                    <span style={{ color: "grey" }}>{readyText ? readyText : 'Ready'}</span>
                 )}
                 {status === "Paused" && (
-                    <span style={{color:"grey"}}>{ pausedText ? readyText : 'Paused' }</span>
+                    <span style={{ color: "grey" }}>{pausedText ? readyText : 'Paused'}</span>
                 )}
                 {status === "Live" && (
-                    <span style={{color:"green"}}>{ liveText ? readyText : 'Live' }</span>
+                    <span style={{ color: "green" }}>{liveText ? readyText : 'Live'}</span>
                 )}
                 {status === "Error" && (
-                    <span style={{color:"red"}}>{ errorText ? readyText : 'Error' }</span>
+                    <span style={{ color: "red" }}>{errorText ? readyText : 'Error'}</span>
                 )}
             </div>
-            <video 
-                className="janus-video-player" 
-                autoPlay 
+            <video
+                className="janus-video-player"
+                autoPlay
                 playsInline />
-            
+
             {isPublisher && (
                 <div className="janus-video-controls">
                     {status === "Paused" && (
@@ -54,11 +54,11 @@ const JanusPlayer = React.forwardRef((
                             {!isMuted && (
                                 <div className="janus-btn" onClick={onMute}>Mute</div>
                             )}
-                        </React.Fragment>  
+                        </React.Fragment>
                     )}
 
                     <div className="janus-select">
-                        <select onChange={(e) => { onBandwidthChange(parseInt(e.target.value)*1000) }}>
+                        <select onChange={(e) => { onBandwidthChange(parseInt(e.target.value) * 1000) }}>
                             <option value={0}>Auto</option>
                             <option value={128}>128 kbit</option>
                             <option value={256}>256 kbit</option>

@@ -58,7 +58,9 @@
   },
   "dependencies": {
     "jquery": "^3.4.1",
-    "webrtc-adapter": "^6.4.8"
+    "text-encoder": "0.0.4",
+    "webrtc-adapter": "^6.4.8",
+    "whatwg-url": "^9.1.0"
   },
   "files": [
     "dist"
